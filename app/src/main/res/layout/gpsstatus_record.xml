@@ -7,21 +7,35 @@
         android:id="@+id/gpsstatus_record_tvHeading"
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_vertical|left"
         android:layout_weight=".5"
         android:gravity="center"
         android:text="@string/various_heading" >
     </TextView>
-    
-    <TextView
-        android:id="@+id/gpsstatus_record_tvAccuracy"
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/various_waiting_gps_fix" >
-    </TextView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="left">
+        <TextView
+            android:id="@+id/gpsstatus_record_tvAccuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:text="@string/various_waiting_gps_fix" >
+        </TextView>
+        <TextView
+            android:id="@+id/gpsstatus_record_tvPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:gravity="left"
+            android:text="@string/various_waiting_position">
+        </TextView>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/gpsstatus_record_imgSatIndicator"
