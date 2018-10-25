@@ -222,6 +222,11 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 
 				File trackGPXExportDirectory = getExportDirectory(startDate);
 				String filenameBase = buildGPXFilename(c);
+
+				// Get the track name; if none has been assigned yet, use the compile time default (see string resource)
+				String trackNameTemp = c.getString(c.getColumnIndex(TrackContentProvider.Schema.COL_NAME));
+				String trackName = (trackNameTemp.equals("") ? context.getResources().getString(R.string.gpx_track_name) : trackNameTemp);
+
 				c.close();
 
 				File trackFile = new File(trackGPXExportDirectory, filenameBase);
@@ -236,7 +241,7 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 					publishProgress(new Long[]{trackId, (long) cTrackPoints.getCount(), (long) cWayPoints.getCount()});
 
 					try {
-						writeGpxFile(cTrackPoints, cWayPoints, trackFile);
+						writeGpxFile(trackName, cTrackPoints, cWayPoints, trackFile);
 						if (exportMediaFiles()) {
 							copyWaypointFiles(trackId, trackGPXExportDirectory);
 						}
@@ -272,7 +277,7 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 	 * @param target Target GPX file
 	 * @throws IOException 
 	 */
-	private void writeGpxFile(Cursor cTrackPoints, Cursor cWayPoints, File target) throws IOException {
+	private void writeGpxFile(String trackName, Cursor cTrackPoints, Cursor cWayPoints, File target) throws IOException {
 		
 		String accuracyOutput = PreferenceManager.getDefaultSharedPreferences(context).getString(
 				OSMTracker.Preferences.KEY_OUTPUT_ACCURACY,
@@ -294,7 +299,7 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 			writer.write(TAG_GPX + "\n");
 			
 			writeWayPoints(writer, cWayPoints, accuracyOutput, fillHDOP, compassOutput);
-			writeTrackPoints(context.getResources().getString(R.string.gpx_track_name), writer, cTrackPoints, fillHDOP, compassOutput);
+			writeTrackPoints(trackName, writer, cTrackPoints, fillHDOP, compassOutput);
 			
 			writer.write("</gpx>");
 		} finally {
