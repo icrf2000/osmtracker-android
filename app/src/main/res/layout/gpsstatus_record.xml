@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ff0000"
             android:gravity="left"
+            android:textIsSelectable="true"
             android:text="@string/various_waiting_position">
         </TextView>
     </LinearLayout>
