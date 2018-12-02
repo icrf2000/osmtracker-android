@@ -553,7 +553,7 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 
 			String buff = "";
 			if(! c.isNull(c.getColumnIndex(TrackContentProvider.Schema.COL_SPEED))) {
-				buff += "<speed>" + c.getDouble(c.getColumnIndex(TrackContentProvider.Schema.COL_SPEED)) + "</speed>" + "\n";
+				buff += "<speed>" + c.getDouble(c.getColumnIndex(TrackContentProvider.Schema.COL_SPEED)) + "</speed>";
 			}
 			if(OSMTracker.Preferences.VAL_OUTPUT_COMPASS_EXTENSION.equals(compass) && !c.isNull(c.getColumnIndex(TrackContentProvider.Schema.COL_COMPASS))) {
 				buff += "<compass>" + c.getDouble(c.getColumnIndex(TrackContentProvider.Schema.COL_COMPASS)) + "</compass>";
