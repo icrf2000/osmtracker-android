@@ -20,7 +20,7 @@
 	<string name="prefs_gps_logging_interval_seconds">seconds</string>
 
 	<string name="prefs_gpx_format">GPX file format long or short</string>
-	<string name="prefs_gpx_format_summary">Long: multiple lines per TRKPT/WPT, short: one line per TRKPT/WPT</string>
+	<string name="prefs_gpx_format_summary">Long: multiple lines per TRKPT/WPT\nShort: one line per TRKPT/WPT</string>
 
 	<string name="prefs_ui">User interface</string>
 	

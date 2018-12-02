@@ -301,10 +301,12 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 				case "long_format": {
 					writeWayPoints_long(writer, cWayPoints, accuracyOutput, fillHDOP, compassOutput);
 					writeTrackPoints_long(context.getResources().getString(R.string.gpx_track_name), writer, cTrackPoints, fillHDOP, compassOutput);
+					break;
 				}
 				case "short_format": {
 					writeWayPoints_short(writer, cWayPoints, accuracyOutput, fillHDOP, compassOutput);
 					writeTrackPoints_short(context.getResources().getString(R.string.gpx_track_name), writer, cTrackPoints, fillHDOP, compassOutput);
+					break;
 				}
 			}
 			
@@ -674,7 +676,7 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 				out.append("</extensions>");
 			}
 
-			out.append("</wpt>" + "\n");
+			out.append("</wpt>" + "\n\n");
 
 			fw.write(out.toString());
 
