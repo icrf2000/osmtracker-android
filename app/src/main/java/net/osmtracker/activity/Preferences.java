@@ -127,6 +127,24 @@ public class Preferences extends PreferenceActivity {
 			}
 		});
 
+		// Update trackpoint accuracy threshold
+		pref = findPreference(OSMTracker.Preferences.KEY_GPS_TRACKPOINT_ACCURACY_THRESHOLD);
+		pref.setSummary(
+				prefs.getString(OSMTracker.Preferences.KEY_GPS_TRACKPOINT_ACCURACY_THRESHOLD, OSMTracker.Preferences.VAL_GPS_TRACKPOINT_ACCURACY_THRESHOLD)
+						+ " " + getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_meters)
+						+ ". " + getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_summary));
+		pref.setOnPreferenceChangeListener(
+				new OnPreferenceChangeListener() {
+					@Override
+					public boolean onPreferenceChange(Preference preference, Object newValue) {
+						preference.setSummary(newValue + " "
+								+ getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_meters)
+								+ ". " + getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_summary));
+						return true;
+					}
+				}
+		);
+
 		pref = findPreference(OSMTracker.Preferences.KEY_GPS_OSSETTINGS);
 		pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
