@@ -133,9 +133,9 @@ public class Preferences extends PreferenceActivity {
 		});
 
 		// don't allow the logging_min_distance to be empty
-		final EditText et = ((EditTextPreference)pref).getEditText();
-		final EditTextPreference etp = (EditTextPreference)pref;
-		et.addTextChangedListener(
+		final EditText et1 = ((EditTextPreference)pref).getEditText();
+		final EditTextPreference etp1 = (EditTextPreference)pref;
+		et1.addTextChangedListener(
 				new TextWatcher() {
 					@Override
 					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -145,11 +145,11 @@ public class Preferences extends PreferenceActivity {
 					public void onTextChanged(CharSequence s, int start, int before, int count) {
 						if (s.length() >= 0) {
 							try {
-								Button bt_ok = ((AlertDialog) etp.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
+								Button bt_ok = ((AlertDialog) etp1.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
 								if (s.length() == 0) {
 									bt_ok.setEnabled(false);
 								} else {
-									((AlertDialog) etp.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+									((AlertDialog) etp1.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 								}
 							} catch (Exception ex) {
 							}
@@ -158,6 +158,56 @@ public class Preferences extends PreferenceActivity {
 
 					@Override
 					public void afterTextChanged(Editable s) {
+
+					}
+				}
+		);
+
+		// Update trackpoint accuracy threshold
+		pref = findPreference(OSMTracker.Preferences.KEY_GPS_TRACKPOINT_ACCURACY_THRESHOLD);
+		pref.setSummary(
+				prefs.getString(OSMTracker.Preferences.KEY_GPS_TRACKPOINT_ACCURACY_THRESHOLD, OSMTracker.Preferences.VAL_GPS_TRACKPOINT_ACCURACY_THRESHOLD)
+						+ " " + getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_meters)
+						+ ". " + getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_summary));
+		pref.setOnPreferenceChangeListener(
+				new OnPreferenceChangeListener() {
+					@Override
+					public boolean onPreferenceChange(Preference preference, Object newValue) {
+						preference.setSummary(newValue + " "
+								+ getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_meters)
+								+ ". " + getResources().getString(R.string.prefs_gps_min_accuracy_for_trackpoint_summary));
+						return true;
+					}
+				}
+		);
+
+		// don't allow the accuracy_threshold to be empty
+		final EditText et2 = ((EditTextPreference)pref).getEditText();
+		final EditTextPreference etp2 = (EditTextPreference)pref;
+		et2.addTextChangedListener(
+				new TextWatcher() {
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+					}
+
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+						if (s.length() >= 0) {
+							try {
+								Button bt_ok = ((AlertDialog) etp2.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
+								if (s.length() == 0) {
+									bt_ok.setEnabled(false);
+								} else {
+									((AlertDialog) etp2.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+								}
+							} catch (Exception ex) {
+							}
+						}
+					}
+
+					@Override
+					public void afterTextChanged(Editable s) {
+
 					}
 				}
 		);
