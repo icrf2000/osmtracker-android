@@ -217,6 +217,14 @@ public class GpsStatusRecord extends LinearLayout implements Listener, LocationL
 			} else {
 				tvAccuracy.setText("");
 			}
+
+			TextView tvPosition = (TextView) findViewById(R.id.gpsstatus_record_tvPosition);
+			tvPosition.setText(getResources().getString(R.string.various_position_lat_lon)
+					.replace("{0}",String.format("%.4f",location.getLatitude()))
+					.replace("{2}",String.format("%.4f",location.getLongitude()))
+					.replace("{1}",(location.getLatitude() > 0) ? "N" : "S")
+					.replace("{3}",(location.getLongitude() > 0) ? "E" : "W"));
+
 		}
 	}
 
