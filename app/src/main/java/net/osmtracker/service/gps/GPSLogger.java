@@ -91,7 +91,8 @@ public class GPSLogger extends Service implements LocationListener {
 	 */
 	private long gpsLoggingInterval;
 	private long gpsLoggingMinDistance;
-	
+	private Float gpsTrackpointAccuracyThreshold;
+
 	/**
 	 * sensors for magnetic orientation
 	 */
@@ -205,7 +206,9 @@ public class GPSLogger extends Service implements LocationListener {
 				OSMTracker.Preferences.KEY_GPS_LOGGING_INTERVAL, OSMTracker.Preferences.VAL_GPS_LOGGING_INTERVAL)) * 1000;
 		gpsLoggingMinDistance = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()).getString(
 				OSMTracker.Preferences.KEY_GPS_LOGGING_MIN_DISTANCE, OSMTracker.Preferences.VAL_GPS_LOGGING_MIN_DISTANCE));
-		
+		gpsTrackpointAccuracyThreshold = Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()).getString(
+				OSMTracker.Preferences.KEY_GPS_TRACKPOINT_ACCURACY_THRESHOLD,OSMTracker.Preferences.VAL_GPS_TRACKPOINT_ACCURACY_THRESHOLD));
+
 		// Register our broadcast receiver
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(OSMTracker.INTENT_TRACK_WP);
@@ -294,7 +297,9 @@ public class GPSLogger extends Service implements LocationListener {
 			//lastNbSatellites = countSatellites();
 			
 			if (isTracking) {
-				dataHelper.track(currentTrackId, location, sensorListener.getAzimuth(), sensorListener.getAccuracy());
+				if (location.getAccuracy() <= gpsTrackpointAccuracyThreshold) {
+					dataHelper.track(currentTrackId, location, sensorListener.getAzimuth(), sensorListener.getAccuracy());
+				}
 			}
 		}
 	}
