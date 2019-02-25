@@ -26,6 +26,10 @@
 	<string name="prefs_incremental_waypoint_counter">Incremental waypoint counter</string>
 	<string name="prefs_incremental_waypoint_counter_summary">Next value for incremental waypoints (normally you shouldn\'t change this)</string>
 
+	<string name="prefs_gps_min_accuracy_for_trackpoint">Accuracy threshold</string>
+	<string name="prefs_gps_min_accuracy_for_trackpoint_summary">If location uncertainity exceeds this threshold, no trackpint is logged</string>
+	<string name="prefs_gps_min_accuracy_for_trackpoint_meters">meters</string>
+
 	<string name="prefs_ui">User interface</string>
 	
 	<string name="prefs_ui_picture_source">Default photo source</string>
