@@ -10,6 +10,7 @@ import net.osmtracker.db.TrackContentProvider;
 import net.osmtracker.overlay.WayPointsOverlay;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -172,6 +173,7 @@ public class DisplayTrackMap extends Activity {
 		
 		// Initialize OSM view
 		osmView = (MapView) findViewById(R.id.displaytrackmap_osmView);
+		Configuration.getInstance().setUserAgentValue("osmtracker");
 		osmView.setMultiTouchControls(true);  // pinch to zoom
 		// we'll use osmView to define if the screen is always on or not
 		osmView.setKeepScreenOn(prefs.getBoolean(OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON, OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON));
