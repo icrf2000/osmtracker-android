@@ -162,6 +162,7 @@ public class Preferences extends PreferenceActivity {
 				}
 		);
 
+
 		// Set GPX format
 		pref = findPreference(OSMTracker.Preferences.KEY_GPX_FORMAT);
 		pref.setSummary(getResources().getString(R.string.prefs_gpx_format_summary));
@@ -171,7 +172,6 @@ public class Preferences extends PreferenceActivity {
 				return true;
 			}
 		});
-
 
 		pref = findPreference(OSMTracker.Preferences.KEY_GPS_OSSETTINGS);
 		pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
