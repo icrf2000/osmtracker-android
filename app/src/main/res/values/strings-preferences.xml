@@ -19,6 +19,10 @@
 	<string name="prefs_gps_logging_interval_summary">Use 0 for the shortest possible (affects battery life)</string>
 	<string name="prefs_gps_logging_interval_seconds">seconds</string>
 
+	<string name="prefs_gps_logging_min_distance">GPS logging distance</string>
+	<string name="prefs_gps_logging_min_distance_summary">Min. distance between track points in meters, use 0 for the shortest possible</string>
+	<string name="prefs_gps_logging_min_distance_meters">meters</string>
+
 	<string name="prefs_gpx_format">GPX file format long or short</string>
 	<string name="prefs_gpx_format_summary">Long: multiple lines per TRKPT/WPT\nShort: one line per TRKPT/WPT</string>
 
