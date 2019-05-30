@@ -17,6 +17,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.PathOverlay;
 import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
+import org.osmdroid.views.overlay.ScaleBarOverlay;
 
 import android.app.Activity;
 import android.content.ContentUris;
@@ -28,6 +29,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -113,6 +115,11 @@ public class DisplayTrackMap extends Activity {
 	 * OSM view overlay that displays waypoints 
 	 */
 	private WayPointsOverlay wayPointsOverlay;
+
+	/**
+	 * OSM view overlay for the map scale bar
+	 */
+	private ScaleBarOverlay scaleBarOverlay;
 	
 	/**
 	 * Current track id
@@ -187,6 +194,8 @@ public class DisplayTrackMap extends Activity {
 
 		selectTileSource();
 
+        setTileDpiScaling();
+
 		createOverlays();
 
 		// Create content observer for trackpoints
@@ -220,6 +229,14 @@ public class DisplayTrackMap extends Activity {
 		Log.e("TileMapName active", mapTile);
 		osmView.setTileSource(selectMapTile(mapTile));
 	}
+
+    /**
+     * Make text on map better readable on high DPI displays
+     */
+    public void setTileDpiScaling () {
+        osmView.setTilesScaledToDpi(true);
+    }
+
 	
 	/**
 	 * Returns a ITileSource for the map according to the selected mapTile
@@ -278,6 +295,8 @@ public class DisplayTrackMap extends Activity {
 
 		selectTileSource();
 
+		setTileDpiScaling();
+		
 		// Refresh way points
 		wayPointsOverlay.refresh();
 
@@ -355,7 +374,12 @@ public class DisplayTrackMap extends Activity {
 	 * Creates overlays over the OSM view
 	 */
 	private void createOverlays() {
-		pathOverlay = new PathOverlay(Color.BLUE, this);
+		DisplayMetrics metrics = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+		// set with to hopefully DPI independent 0.5mm
+ 		pathOverlay = new PathOverlay(Color.BLUE, (float)(metrics.densityDpi / 25.4 / 2),this);
+
 		osmView.getOverlays().add(pathOverlay);
 		
 		myLocationOverlay = new SimpleLocationOverlay(this);
@@ -363,6 +387,9 @@ public class DisplayTrackMap extends Activity {
 		
 		wayPointsOverlay = new WayPointsOverlay(this, currentTrackId);
 		osmView.getOverlays().add(wayPointsOverlay);
+
+		scaleBarOverlay = new ScaleBarOverlay(osmView);
+		osmView.getOverlays().add(scaleBarOverlay);
 	}
 	
 	/**
