@@ -271,6 +271,8 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 
 	/**
 	 * Writes the GPX file
+	 * @param tags The tags assigned to the track
+	 * @param track_description
 	 * @param cTrackPoints Cursor to track points.
 	 * @param cWayPoints Cursor to way points.
 	 * @param target Target GPX file
@@ -301,25 +303,15 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 			writer.write(XML_HEADER + "\n");
 			writer.write(TAG_GPX + "\n");
 
-			if (tags != null && !tags.equals("")) {
-				writer.write("<extensions>\n");
-				writer.write("<tags>" + tags + "</tags>\n");
-				writer.write("</extensions>\n");
-			}
-
-			if (track_description != null && !track_description.equals("")) {
-				writer.write("<desc>" + track_description + "</desc>\n");
-			}
-
 			switch (gpxFormat) {
 				case "long_format": {
 					writeWayPoints_long(writer, cWayPoints, accuracyOutput, fillHDOP, compassOutput);
-					writeTrackPoints_long(context.getResources().getString(R.string.gpx_track_name), writer, cTrackPoints, fillHDOP, compassOutput);
+					writeTrackPoints_long(context.getResources().getString(R.string.gpx_track_name), tags, track_description, writer, cTrackPoints, fillHDOP, compassOutput);
 					break;
 				}
 				case "short_format": {
 					writeWayPoints_short(writer, cWayPoints, accuracyOutput, fillHDOP, compassOutput);
-					writeTrackPoints_short(context.getResources().getString(R.string.gpx_track_name), writer, cTrackPoints, fillHDOP, compassOutput);
+					writeTrackPoints_short(context.getResources().getString(R.string.gpx_track_name), tags, track_description, writer, cTrackPoints, fillHDOP, compassOutput);
 					break;
 				}
 			}
@@ -335,13 +327,15 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 	/**strict
 	 * Iterates on track points and write them - long version.
 	 * @param trackName Name of the track (metadata).
+	 * @param tags
+	 * @param track_description
 	 * @param fw Writer to the target file.
 	 * @param c Cursor to track points.
 	 * @param fillHDOP Indicates whether fill <hdop> tag with approximation from location accuracy.
 	 * @param compass Indicates if and how to write compass heading to the GPX ('none', 'comment', 'extension')
 	 * @throws IOException
 	 */
-	private void writeTrackPoints_long(String trackName, Writer fw, Cursor c, boolean fillHDOP, String compass) throws IOException {
+	private void writeTrackPoints_long(String trackName, String tags, String track_description, Writer fw, Cursor c, boolean fillHDOP, String compass) throws IOException {
 		// Update dialog every 1%
 		int dialogUpdateThreshold = c.getCount() / 100;
 		if (dialogUpdateThreshold == 0) {
@@ -350,6 +344,17 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 		
 		fw.write("\t" + "<trk>" + "\n");
 		fw.write("\t\t" + "<name>" + CDATA_START + trackName + CDATA_END + "</name>" + "\n");
+
+		if (tags != null && !tags.equals("")) {
+			fw.write("<extensions>\n");
+			fw.write("<tags>" + tags + "</tags>\n");
+			fw.write("</extensions>\n");
+		}
+
+		if (track_description != null && !track_description.equals("")) {
+			fw.write("<desc>" + track_description + "</desc>\n");
+		}
+
 		if (fillHDOP) {
 			fw.write("\t\t" + "<cmt>"
 					+ CDATA_START
@@ -520,13 +525,15 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 	/**
 	 * Iterates on track points and write them - short version
 	 * @param trackName Name of the track (metadata).
+	 * @param tags
+	 * @param track_description
 	 * @param fw Writer to the target file.
 	 * @param c Cursor to track points.
 	 * @param fillHDOP Indicates whether fill <hdop> tag with approximation from location accuracy.
 	 * @param compass Indicates if and how to write compass heading to the GPX ('none', 'comment', 'extension')
 	 * @throws IOException
 	 */
-	private void writeTrackPoints_short(String trackName, Writer fw, Cursor c, boolean fillHDOP, String compass) throws IOException {
+	private void writeTrackPoints_short(String trackName, String tags, String track_description, Writer fw, Cursor c, boolean fillHDOP, String compass) throws IOException {
 		// Update dialog every 1%
 		int dialogUpdateThreshold = c.getCount() / 100;
 		if (dialogUpdateThreshold == 0) {
@@ -535,6 +542,17 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 
 		fw.write("<trk>" + "\n");
 		fw.write("<name>" + CDATA_START + trackName + CDATA_END + "</name>" + "\n");
+
+		if (tags != null && !tags.equals("")) {
+			fw.write("<extensions>\n");
+			fw.write("<tags>" + tags + "</tags>\n");
+			fw.write("</extensions>\n");
+		}
+
+		if (track_description != null && !track_description.equals("")) {
+			fw.write("<desc>" + track_description + "</desc>\n");
+		}
+
 		if (fillHDOP) {
 			fw.write("<cmt>"
 					+ CDATA_START
