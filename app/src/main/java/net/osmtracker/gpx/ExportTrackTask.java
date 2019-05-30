@@ -346,13 +346,13 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 		fw.write("\t\t" + "<name>" + CDATA_START + trackName + CDATA_END + "</name>" + "\n");
 
 		if (tags != null && !tags.equals("")) {
-			fw.write("<extensions>\n");
-			fw.write("<tags>" + tags + "</tags>\n");
-			fw.write("</extensions>\n");
+			fw.write("\t\t" + "<extensions>\n");
+			fw.write("\t\t" + "<tags>" + tags + "</tags>\n");
+			fw.write("\t\t" + "</extensions>\n");
 		}
 
 		if (track_description != null && !track_description.equals("")) {
-			fw.write("<desc>" + track_description + "</desc>\n");
+			fw.write("\t\t" + "<desc>" + track_description + "</desc>\n");
 		}
 
 		if (fillHDOP) {
