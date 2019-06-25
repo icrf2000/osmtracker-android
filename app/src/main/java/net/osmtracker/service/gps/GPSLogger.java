@@ -5,6 +5,7 @@ import net.osmtracker.R;
 import net.osmtracker.activity.TrackLogger;
 import net.osmtracker.db.DataHelper;
 import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.listener.PressureListener;
 import net.osmtracker.listener.SensorListener;
 
 import android.Manifest;
@@ -99,6 +100,11 @@ public class GPSLogger extends Service implements LocationListener {
 	private SensorListener sensorListener = new SensorListener();
 
 	/**
+	 * sensor for atmospheric pressure
+	 */
+	private PressureListener pressureListener = new PressureListener(true);
+
+	/**
 	 * Receives Intent for way point tracking, and stop/start logging.
 	 */
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -123,7 +129,7 @@ public class GPSLogger extends Service implements LocationListener {
 
 							dataHelper.wayPoint(trackId, lastLocation, lastNbSatellites, name, link, uuid, sensorListener.getAzimuth(), sensorListener.getAccuracy());
 							// If there is a waypoint in the track, there should also be a trackpoint
-							dataHelper.track(currentTrackId, lastLocation, sensorListener.getAzimuth(), sensorListener.getAccuracy());
+							dataHelper.track(currentTrackId, lastLocation, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
 						}
 					}
 				}
@@ -298,7 +304,7 @@ public class GPSLogger extends Service implements LocationListener {
 			
 			if (isTracking) {
 				if (location.getAccuracy() <= gpsTrackpointAccuracyThreshold) {
-					dataHelper.track(currentTrackId, location, sensorListener.getAzimuth(), sensorListener.getAccuracy());
+					dataHelper.track(currentTrackId, location, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
 				}
 			}
 		}
