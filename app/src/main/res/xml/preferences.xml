@@ -20,32 +20,23 @@
         android:summary="@string/prefs_incremental_waypoint_counter_summary"
         android:numeric="integer"/>
 	<PreferenceCategory android:title="@string/prefs_gps">
-		<Preference
-			android:summary="@string/prefs_gps_os_settings_summary"
-			android:title="@string/prefs_gps_os_settings"
-			android:key="gps.ossettings" />
-		<CheckBoxPreference
-			android:key="gps.checkstartup"
-			android:title="@string/prefs_check_gps_startup"
-			android:summary="@string/prefs_check_gps_startup_summary"
-			android:defaultValue="true" />
-		<CheckBoxPreference
-			android:key="gps.ignoreclock"
-			android:title="@string/prefs_gps_ignore_clock"
-			android:summary="@string/prefs_gps_ignore_clock_summary"
-			android:defaultValue="false" />
-		<EditTextPreference
-			android:key="gps.logging.interval"
-			android:title="@string/prefs_gps_logging_interval"
-			android:summary="@string/prefs_gps_logging_interval_summary"
-			android:defaultValue="0"
-			android:inputType="number" />
-		<EditTextPreference
-			android:key="gps.logging.min_distance"
-			android:title="@string/prefs_gps_logging_min_distance"
-			android:summary="@string/prefs_gps_logging_min_distance_summary"
-			android:defaultValue="0"
-			android:inputType="number" />
+		<Preference android:summary="@string/prefs_gps_os_settings_summary"
+			android:title="@string/prefs_gps_os_settings" android:key="gps.ossettings"></Preference>
+		<CheckBoxPreference android:key="gps.checkstartup"
+			android:title="@string/prefs_check_gps_startup" android:summary="@string/prefs_check_gps_startup_summary"
+			android:defaultValue="true"></CheckBoxPreference>
+		<CheckBoxPreference android:key="gps.ignoreclock"
+			android:title="@string/prefs_gps_ignore_clock" android:summary="@string/prefs_gps_ignore_clock_summary"
+			android:defaultValue="false"></CheckBoxPreference>
+		<EditTextPreference android:key="gps.logging.interval"
+			android:title="@string/prefs_gps_logging_interval" android:summary="@string/prefs_gps_logging_interval_summary"
+			android:defaultValue="0" android:inputType="number"></EditTextPreference>
+		<EditTextPreference android:key="gps.logging.min_distance"
+			android:title="@string/prefs_gps_logging_min_distance" android:summary="@string/prefs_gps_logging_min_distance_summary"
+			android:defaultValue="0" android:inputType="number"></EditTextPreference>
+		<EditTextPreference android:key="gps.logging.trackpoint_accuracy_threshold"
+			android:title="@string/prefs_gps_min_accuracy_for_trackpoint" android:summary="@string/prefs_gps_min_accuracy_for_trackpoint_summary"
+			android:defaultValue="50" android:inputType="number"></EditTextPreference>
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/prefs_output">
