@@ -195,6 +195,37 @@ public class Preferences extends PreferenceActivity {
 				}
 		);
 
+		// don't allow the accuracy_threshold to be empty
+		final EditText et2 = ((EditTextPreference)pref).getEditText();
+		final EditTextPreference etp2 = (EditTextPreference)pref;
+		et2.addTextChangedListener(
+				new TextWatcher() {
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+					}
+
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+						if (s.length() >= 0) {
+							try {
+								Button bt_ok = ((AlertDialog) etp2.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
+								if (s.length() == 0) {
+									bt_ok.setEnabled(false);
+								} else {
+									((AlertDialog) etp2.getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+								}
+							} catch (Exception ex) {
+							}
+						}
+					}
+
+					@Override
+					public void afterTextChanged(Editable s) {
+
+					}
+				}
+		);
+
 		pref = findPreference(OSMTracker.Preferences.KEY_GPS_OSSETTINGS);
 		pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
