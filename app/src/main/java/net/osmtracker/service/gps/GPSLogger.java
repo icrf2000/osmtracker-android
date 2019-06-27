@@ -55,6 +55,11 @@ public class GPSLogger extends Service implements LocationListener {
 	 * Is GPS enabled ?
 	 */
 	private boolean isGpsEnabled = false;
+
+	/**
+	 * Use barometer yes/no ?
+	 */
+	private boolean use_barometer = false;
 	
 	/**
 	 * System notification id.
@@ -102,7 +107,7 @@ public class GPSLogger extends Service implements LocationListener {
 	/**
 	 * sensor for atmospheric pressure
 	 */
-	private PressureListener pressureListener = new PressureListener(true);
+	private PressureListener pressureListener = new PressureListener();
 
 	/**
 	 * Receives Intent for way point tracking, and stop/start logging.
@@ -215,6 +220,8 @@ public class GPSLogger extends Service implements LocationListener {
 				OSMTracker.Preferences.KEY_GPS_LOGGING_MIN_DISTANCE, OSMTracker.Preferences.VAL_GPS_LOGGING_MIN_DISTANCE));
 		gpsTrackpointAccuracyThreshold = Float.parseFloat(PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()).getString(
 				OSMTracker.Preferences.KEY_GPS_TRACKPOINT_ACCURACY_THRESHOLD,OSMTracker.Preferences.VAL_GPS_TRACKPOINT_ACCURACY_THRESHOLD));
+		use_barometer =  PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()).getBoolean(
+				OSMTracker.Preferences.KEY_USE_BAROMETER, false);
 		
 		// Register our broadcast receiver
 		IntentFilter filter = new IntentFilter();
@@ -236,7 +243,7 @@ public class GPSLogger extends Service implements LocationListener {
 		sensorListener.register(this);
 
 		// register for atmospheric pressure updates
-		pressureListener.register(this);
+		pressureListener.register(this, use_barometer);
 				
 		super.onCreate();
 	}
