@@ -300,9 +300,7 @@ public abstract class ExportTrackTask  extends AsyncTask<Void, Long, Boolean> {
 			if ((tags != null && !tags.equals("")) || (track_description != null && !track_description.equals(""))) {
 				writer.write("\t<metadata>\n");
 				if (tags != null && !tags.equals("")) {
-					for (String tag : tags.split(",")) {
-						writer.write("\t\t<keywords>" + tag.trim() + "</keywords>\n");
-					}
+					writer.write("\t\t<keywords>" + tags + "</keywords>\n");
 				}
 
 				if (track_description != null && !track_description.equals("")) {
